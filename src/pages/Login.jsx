@@ -36,6 +36,13 @@ class Login extends React.Component {
     return this.setState({ isButtonDisabled: true });
   }
 
+  onClickRedirect = (event) => {
+    const { history } = this.props;
+    event.preventDefault();
+
+    history.push('/configurations');
+  }
+
   render() {
     const { isButtonDisabled } = this.state;
     return (
@@ -64,6 +71,13 @@ class Login extends React.Component {
           disabled={ isButtonDisabled }
         >
           Entrar
+        </button>
+        <button
+          data-testid="btn-settings"
+          type="submit"
+          onClick={ this.onClickRedirect }
+        >
+          Configurações
         </button>
       </form>
     );
