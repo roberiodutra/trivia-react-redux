@@ -37,21 +37,21 @@ class Login extends React.Component {
     }
     return this.setState({ isButtonDisabled: true });
   }
-  
+
   handleSubmit = (event) => {
     const { getToken, history } = this.props;
     event.preventDefault();
     getToken();
     history.push('/game');
   }
-  
+
   onClickRedirect = (event) => {
     const { history } = this.props;
     event.preventDefault();
 
     history.push('/configurations');
   }
-  
+
   render() {
     const { isButtonDisabled } = this.state;
     return (
