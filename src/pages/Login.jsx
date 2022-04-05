@@ -37,14 +37,21 @@ class Login extends React.Component {
     }
     return this.setState({ isButtonDisabled: true });
   }
-
+  
   handleSubmit = (event) => {
     const { getToken, history } = this.props;
     event.preventDefault();
     getToken();
     history.push('/game');
   }
+  
+  onClickRedirect = (event) => {
+    const { history } = this.props;
+    event.preventDefault();
 
+    history.push('/configurations');
+  }
+  
   render() {
     const { isButtonDisabled } = this.state;
     return (
@@ -74,6 +81,13 @@ class Login extends React.Component {
           onClick={ this.handleSubmit }
         >
           Entrar
+        </button>
+        <button
+          data-testid="btn-settings"
+          type="submit"
+          onClick={ this.onClickRedirect }
+        >
+          Configurações
         </button>
       </form>
     );
