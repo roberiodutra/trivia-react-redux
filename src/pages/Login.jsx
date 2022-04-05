@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchToken } from '../actions';
+import { fetchToken, saveEmail, saveName } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +10,7 @@ class Login extends React.Component {
       name: '',
       isEmailValid: false,
       isButtonDisabled: true,
+      email: '',
     };
   }
 
@@ -22,11 +23,11 @@ class Login extends React.Component {
     const mailformat = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
     if (target.value.match(mailformat) && name) {
       return this.setState(
-        { isEmailValid: true }, () => this.activateButton(),
+        { isEmailValid: true, email: target.value }, () => this.activateButton(),
       );
     }
     return this.setState(
-      { isEmailValid: false }, () => this.activateButton(),
+      { isEmailValid: false, email: target.value }, () => this.activateButton(),
     );
   }
 
@@ -39,9 +40,12 @@ class Login extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { getToken, history } = this.props;
+    const { email, name } = this.state;
+    const { getToken, history, saveEmailFunction, saveNameFunction } = this.props;
     event.preventDefault();
     getToken();
+    saveEmailFunction(email);
+    saveNameFunction(name);
     history.push('/game');
   }
 
@@ -96,11 +100,15 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(fetchToken()),
+  saveEmailFunction: (email) => dispatch(saveEmail(email)),
+  saveNameFunction: (name) => dispatch(saveName(name)),
 });
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   getToken: PropTypes.func.isRequired,
+  saveEmailFunction: PropTypes.func.isRequired,
+  saveNameFunction: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
