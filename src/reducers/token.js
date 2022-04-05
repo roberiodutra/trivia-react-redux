@@ -1,11 +1,11 @@
-const INITIAL_STATE = {
-  token: '',
-};
+import { START_GAME } from '../actions';
+
+const INITIAL_STATE = '';
 
 const token = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'LOGIN':
-    return 'teste';
+  case START_GAME:
+    return action.token;
   default:
     return state;
   }

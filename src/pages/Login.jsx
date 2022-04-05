@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fetchToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -35,14 +37,21 @@ class Login extends React.Component {
     }
     return this.setState({ isButtonDisabled: true });
   }
-
+  
+  handleSubmit = (event) => {
+    const { getToken, history } = this.props;
+    event.preventDefault();
+    getToken();
+    history.push('/game');
+  }
+  
   onClickRedirect = (event) => {
     const { history } = this.props;
     event.preventDefault();
 
     history.push('/configurations');
   }
-
+  
   render() {
     const { isButtonDisabled } = this.state;
     return (
@@ -69,6 +78,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           type="submit"
           disabled={ isButtonDisabled }
+          onClick={ this.handleSubmit }
         >
           Entrar
         </button>
@@ -84,4 +94,13 @@ class Login extends React.Component {
   }
 }
 
-export default connect()(Login);
+const mapDispatchToProps = (dispatch) => ({
+  getToken: () => dispatch(fetchToken()),
+});
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  getToken: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
