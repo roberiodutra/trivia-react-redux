@@ -33,6 +33,11 @@ class Game extends React.Component {
     this.start();
   }
 
+  componentWillUnmount() {
+    const { interval } = this.state;
+    clearInterval(interval);
+  }
+
   start = () => {
     const second = 1000;
     const interval = setInterval(this.lessTimer, second);
@@ -94,12 +99,17 @@ class Game extends React.Component {
   // hard: 3, medium: 2, easy: 1
 
   nextQuestion = () => {
-    const { position } = this.state;
+    const { questions, position } = this.state;
+    const { history } = this.props;
     const nextPosition = position + 1;
+    if (position === questions.length - 1) {
+      history.push('/feedback');
+    }
     this.setState({
       position: nextPosition,
       isAnswered: false,
-      answers: [] }, () => this.randomizeAnswers());
+      answers: [],
+      timer: 30 }, () => this.randomizeAnswers());
   };
 
   render() {
@@ -165,6 +175,7 @@ class Game extends React.Component {
 Game.propTypes = {
   token: PropTypes.string.isRequired,
   saveScoreFunction: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
