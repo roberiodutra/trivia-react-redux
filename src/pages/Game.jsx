@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../CSS/game.css';
 import Header from '../components/Header';
+import { saveScore } from '../actions';
 
 class Game extends React.Component {
   constructor() {
@@ -68,11 +69,34 @@ class Game extends React.Component {
     });
   }
 
-  checkAnswer = () => {
+  checkAnswer = ({ target }) => {
+    const { timer } = this.state;
+    const { saveScoreFunction } = this.props;
     this.setState({
       isAnswered: true,
     });
+    const defaultScore = 10;
+    let totalScore = 0;
+    if (target.id === 'correct-answer') {
+      switch (target.name) {
+      case 'medium':
+        totalScore += (defaultScore + (timer * 2));
+        saveScoreFunction(totalScore);
+        break;
+      case 'hard':
+        totalScore += (defaultScore + (timer * Number('3')));
+        saveScoreFunction(totalScore);
+        break;
+      default:
+        totalScore += (defaultScore + timer);
+        saveScoreFunction(totalScore);
+        break;
+      }
+    }
   }
+
+  // 10 + (timer * dificuldade)
+  // hard: 3, medium: 2, easy: 1
 
   nextQuestion = () => {
     const { questions, position } = this.state;
@@ -107,10 +131,12 @@ class Game extends React.Component {
                       <button
                         type="button"
                         data-testid="correct-answer"
+                        id="correct-answer"
                         className={ isAnswered ? 'verde' : 'preto' }
                         onClick={ this.checkAnswer }
                         key={ index }
                         disabled={ isDisabled }
+                        name={ questions[position].difficulty }
                       >
                         { answer }
                       </button>
@@ -148,6 +174,7 @@ class Game extends React.Component {
 
 Game.propTypes = {
   token: PropTypes.string.isRequired,
+  saveScoreFunction: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
@@ -155,4 +182,8 @@ const mapStateToProps = (state) => ({
   token: state.token,
 });
 
-export default connect(mapStateToProps, null)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  saveScoreFunction: (score) => dispatch(saveScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
