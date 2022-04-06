@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { fetchToken, saveEmail, saveName } from '../actions';
 
 class Login extends React.Component {
@@ -40,13 +39,15 @@ class Login extends React.Component {
     return this.setState({ isButtonDisabled: true });
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit = (event) => {
     const { email, name } = this.state;
     const { getToken, history, saveEmailFunction, saveNameFunction } = this.props;
     event.preventDefault();
     saveEmailFunction(email);
     saveNameFunction(name);
     getToken();
+    saveEmailFunction(email);
+    saveNameFunction(name);
     history.push('/game');
   }
 
