@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import '../CSS/game.css';
 import Header from '../components/Header';
 
 class Game extends React.Component {
@@ -13,6 +13,7 @@ class Game extends React.Component {
       answers: [],
       timer: 30,
       isDisabled: false,
+      isAnswered: false,
     };
   }
 
@@ -62,8 +63,14 @@ class Game extends React.Component {
     });
   }
 
+  checkAnswer = () => {
+    this.setState({
+      isAnswered: true,
+    });
+  }
+
   render() {
-    const { questions, position, answers, timer, isDisabled } = this.state;
+    const { questions, position, answers, timer, isDisabled, isAnswered } = this.state;
     return (
       <div>
         <Header />
@@ -81,6 +88,8 @@ class Game extends React.Component {
                       <button
                         type="button"
                         data-testid="correct-answer"
+                        className={ isAnswered ? 'verde' : 'preto' }
+                        onClick={ this.checkAnswer }
                         key={ index }
                         disabled={ isDisabled }
                       >
@@ -91,6 +100,8 @@ class Game extends React.Component {
                       <button
                         type="button"
                         data-testid={ `wrong-answer-${index}` }
+                        className={ isAnswered ? 'vermelho' : 'preto' }
+                        onClick={ this.checkAnswer }
                         key={ index }
                         disabled={ isDisabled }
                       >
