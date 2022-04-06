@@ -13,7 +13,6 @@ class Header extends React.Component {
     const { email, saveGravatarFunction } = this.props;
     const convertedEmail = md5(email).toString();
     const imgLink = `https://www.gravatar.com/avatar/${convertedEmail}`;
-    console.log(imgLink);
     saveGravatarFunction(imgLink);
   }
 
