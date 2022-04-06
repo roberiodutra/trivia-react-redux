@@ -46,8 +46,6 @@ class Login extends React.Component {
     saveEmailFunction(email);
     saveNameFunction(name);
     await getToken();
-    saveEmailFunction(email);
-    saveNameFunction(name);
     history.push('/game');
   }
 

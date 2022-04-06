@@ -1,0 +1,11 @@
+.verde {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.vermelho {
+  border: 3px solid red;
+}
+
+.preto {
+  border: 2px solid black;
+}
