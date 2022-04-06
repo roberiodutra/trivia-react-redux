@@ -37,7 +37,7 @@ class Game extends React.Component {
     } = questions[position];
     const sortNumber = 0.5;
     const answers = [...incorrectAnswers, correctAnswer]
-      .sort(() => Math.random() - sortNumber);
+      .sort(() => Math.random() - sortNumber); // https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/
 
     this.setState({
       answers,
@@ -49,6 +49,15 @@ class Game extends React.Component {
       isAnswered: true,
     });
   }
+
+  nextQuestion = () => {
+    const { position } = this.state;
+    const nextPosition = position + 1;
+    this.setState({
+      position: nextPosition,
+      isAnswered: false,
+      answers: [] }, () => this.randomizeAnswers());
+  };
 
   render() {
     const { questions, position, answers, isAnswered } = this.state;
@@ -88,6 +97,15 @@ class Game extends React.Component {
                       </button>
                     )
                 ))}
+                { isAnswered && (
+                  <button
+                    onClick={ this.nextQuestion }
+                    data-testid="btn-next"
+                    type="button"
+                  >
+                    Next
+
+                  </button>) }
               </div>
             </div>
           </div>
