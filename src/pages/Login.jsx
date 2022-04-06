@@ -39,13 +39,13 @@ class Login extends React.Component {
     return this.setState({ isButtonDisabled: true });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     const { email, name } = this.state;
     const { getToken, history, saveEmailFunction, saveNameFunction } = this.props;
     event.preventDefault();
     saveEmailFunction(email);
     saveNameFunction(name);
-    getToken();
+    await getToken();
     saveEmailFunction(email);
     saveNameFunction(name);
     history.push('/game');

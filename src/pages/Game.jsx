@@ -34,13 +34,9 @@ class Game extends React.Component {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer,
     } = questions[position];
-
-    const indexedIncorrectAnswers = incorrectAnswers.map((incorrectAnswer, index) => ([
-      incorrectAnswer, index,
-    ]
-    ));
-
-    const answers = [...indexedIncorrectAnswers, correctAnswer].sort();
+    const sortNumber = 0.5;
+    const answers = [...incorrectAnswers, correctAnswer]
+      .sort(() => Math.random() - sortNumber);
 
     this.setState({
       answers,
@@ -49,7 +45,6 @@ class Game extends React.Component {
 
   render() {
     const { questions, position, answers } = this.state;
-    console.log(questions);
     return (
       <div>
         <Header />
@@ -75,10 +70,10 @@ class Game extends React.Component {
                     : (
                       <button
                         type="button"
-                        data-testid={ `wrong-answer-${answer[1]}` }
+                        data-testid={ `wrong-answer-${index}` }
                         key={ index }
                       >
-                        { answer[0] }
+                        { answer }
                       </button>
                     )
                 ))}
