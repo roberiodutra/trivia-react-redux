@@ -11,6 +11,8 @@ class Game extends React.Component {
       questions: [],
       position: 0,
       answers: [],
+      timer: 30,
+      isDisabled: false,
     };
   }
 
@@ -26,6 +28,23 @@ class Game extends React.Component {
           questions: results,
         }, () => this.randomizeAnswers());
       });
+    this.start();
+  }
+
+  start = () => {
+    const second = 1000;
+    const interval = setInterval(this.lessTimer, second);
+    this.setState({ interval });
+  }
+
+  lessTimer = () => {
+    this.setState((prevState) => ({ timer: prevState.timer - 1 }), () => {
+      const { timer, interval } = this.state;
+      if (timer === 0) {
+        clearInterval(interval);
+        this.setState({ isDisabled: true });
+      }
+    });
   }
 
   randomizeAnswers = () => {
@@ -44,7 +63,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions, position, answers } = this.state;
+    const { questions, position, answers, timer, isDisabled } = this.state;
     return (
       <div>
         <Header />
@@ -63,6 +82,7 @@ class Game extends React.Component {
                         type="button"
                         data-testid="correct-answer"
                         key={ index }
+                        disabled={ isDisabled }
                       >
                         { answer }
                       </button>
@@ -72,11 +92,13 @@ class Game extends React.Component {
                         type="button"
                         data-testid={ `wrong-answer-${index}` }
                         key={ index }
+                        disabled={ isDisabled }
                       >
                         { answer }
                       </button>
                     )
                 ))}
+                <p>{ timer }</p>
               </div>
             </div>
           </div>
