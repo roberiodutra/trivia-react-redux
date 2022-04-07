@@ -28,7 +28,7 @@ class Game extends React.Component {
         const { results } = data;
         this.setState({
           questions: results,
-        }, () => this.randomizeAnswers());
+        }, this.randomizeAnswers);
       });
     this.start();
   }
@@ -56,13 +56,18 @@ class Game extends React.Component {
 
   randomizeAnswers = () => {
     const { questions, position } = this.state;
+    const sortNumber = 0.5;
     const {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer,
     } = questions[position];
     const answers = [...incorrectAnswers, correctAnswer];
-    // https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/
+    const randomAnswers = answers.sort(() => Math.random() - sortNumber);
 
+    if (answers.every((element, index) => element === randomAnswers[index])) {
+      answers.sort(() => Math.random() - sortNumber);
+    }
+    // https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/
     this.setState({
       answers,
     });
@@ -116,7 +121,6 @@ class Game extends React.Component {
   };
 
   render() {
-    const sortNumber = 0.5;
     const { questions, position, answers, timer, isDisabled, isAnswered } = this.state;
     return (
       <div>
@@ -157,7 +161,7 @@ class Game extends React.Component {
                         { answer }
                       </button>
                     )
-                )).sort(() => Math.random() - sortNumber)}
+                ))}
                 <p>{ timer }</p>
                 { isAnswered && (
                   <button

@@ -2,8 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { saveScore } from '../actions';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    this.saveRank();
+  }
+
+  saveRank = () => {
+    const { name, score, picture } = this.props;
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    if (ranking) {
+      return localStorage
+        .setItem('ranking', JSON.stringify([...ranking, { name, score, picture }]));
+    }
+    return localStorage.setItem('ranking', JSON.stringify([{ name, score, picture }]));
+  }
+
   feedbackMessage = () => {
     const { assertions } = this.props;
     const minQuestions = 3;
@@ -23,8 +38,11 @@ class Feedback extends React.Component {
   }
 
   redirectToRanking = (event) => {
+    const { saveScoreFunction } = this.props;
+    const defaultScore = 0;
     event.preventDefault();
     const { history } = this.props;
+    saveScoreFunction(defaultScore);
     history.push('/ranking');
   }
 
@@ -71,8 +89,14 @@ Feedback.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
+  name: state.player.name,
+  picture: state.player.gravatar,
   score: state.player.score,
   assertions: state.player.assertions,
 });
 
-export default connect(mapStateToProps)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  saveScoreFunction: (score) => dispatch(saveScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
