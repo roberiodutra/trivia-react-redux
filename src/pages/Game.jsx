@@ -77,7 +77,6 @@ class Game extends React.Component {
     });
     const defaultScore = 10;
     const assertions = 1;
-    console.log(assertions);
     let totalScore = 0;
     if (target.id === 'correct-answer') {
       switch (target.name) {
