@@ -3,6 +3,7 @@ export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const SAVE_NAME = 'SAVE_NAME';
 export const SAVE_GRAVATAR = 'SAVE_GRAVATAR';
 export const SAVE_SCORE = 'SAVE_SCORE';
+export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
 
 export const requestToken = () => ({
   type: 'REQUEST_TOKEN',
@@ -31,6 +32,11 @@ export const saveGravatar = (gravatar) => ({
 export const saveScore = (score) => ({
   type: SAVE_SCORE,
   score,
+});
+
+export const updateAssertions = (assertions) => ({
+  type: UPDATE_ASSERTIONS,
+  assertions,
 });
 
 export const fetchToken = () => async (dispatch) => {

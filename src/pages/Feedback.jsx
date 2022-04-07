@@ -38,12 +38,12 @@ class Feedback extends React.Component {
           <h3
             data-testid="feedback-total-question"
           >
-            {`Você acertou ${assertions} questões!`}
+            {assertions}
           </h3>
           <h3
             data-testid="feedback-total-score"
           >
-            {`Um total de ${score} pontos.`}
+            {score}
           </h3>
           <button
             type="button"

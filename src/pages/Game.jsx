@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../CSS/game.css';
 import Header from '../components/Header';
-import { saveScore } from '../actions';
+import { saveScore, updateAssertions } from '../actions';
 
 class Game extends React.Component {
   constructor() {
@@ -60,9 +60,8 @@ class Game extends React.Component {
       incorrect_answers: incorrectAnswers,
       correct_answer: correctAnswer,
     } = questions[position];
-    const sortNumber = 0.5;
-    const answers = [...incorrectAnswers, correctAnswer]
-      .sort(() => Math.random() - sortNumber); // https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/
+    const answers = [...incorrectAnswers, correctAnswer];
+    // https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/
 
     this.setState({
       answers,
@@ -71,25 +70,29 @@ class Game extends React.Component {
 
   checkAnswer = ({ target }) => {
     const { timer } = this.state;
-    const { saveScoreFunction } = this.props;
+    const { saveScoreFunction, updateAssertionsFunction } = this.props;
     this.setState({
       isAnswered: true,
     });
     const defaultScore = 10;
+    const assertions = 1;
     let totalScore = 0;
     if (target.id === 'correct-answer') {
       switch (target.name) {
       case 'medium':
         totalScore += (defaultScore + (timer * 2));
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       case 'hard':
         totalScore += (defaultScore + (timer * Number('3')));
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       default:
         totalScore += (defaultScore + timer);
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       }
     }
@@ -113,6 +116,7 @@ class Game extends React.Component {
   };
 
   render() {
+    const sortNumber = 0.5;
     const { questions, position, answers, timer, isDisabled, isAnswered } = this.state;
     return (
       <div>
@@ -153,7 +157,7 @@ class Game extends React.Component {
                         { answer }
                       </button>
                     )
-                ))}
+                )).sort(() => Math.random() - sortNumber)}
                 <p>{ timer }</p>
                 { isAnswered && (
                   <button
@@ -176,6 +180,7 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   saveScoreFunction: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateAssertionsFunction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -184,6 +189,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveScoreFunction: (score) => dispatch(saveScore(score)),
+  updateAssertionsFunction: (assertions) => dispatch(updateAssertions(assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
