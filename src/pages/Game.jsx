@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../CSS/game.css';
 import Header from '../components/Header';
-import { saveScore } from '../actions';
+import { saveScore, updateAssertions } from '../actions';
 
 class Game extends React.Component {
   constructor() {
@@ -71,25 +71,30 @@ class Game extends React.Component {
 
   checkAnswer = ({ target }) => {
     const { timer } = this.state;
-    const { saveScoreFunction } = this.props;
+    const { saveScoreFunction, updateAssertionsFunction } = this.props;
     this.setState({
       isAnswered: true,
     });
     const defaultScore = 10;
+    const assertions = 1;
+    console.log(assertions);
     let totalScore = 0;
     if (target.id === 'correct-answer') {
       switch (target.name) {
       case 'medium':
         totalScore += (defaultScore + (timer * 2));
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       case 'hard':
         totalScore += (defaultScore + (timer * Number('3')));
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       default:
         totalScore += (defaultScore + timer);
         saveScoreFunction(totalScore);
+        updateAssertionsFunction(assertions);
         break;
       }
     }
@@ -176,6 +181,7 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   saveScoreFunction: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateAssertionsFunction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -184,6 +190,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveScoreFunction: (score) => dispatch(saveScore(score)),
+  updateAssertionsFunction: (assertions) => dispatch(updateAssertions(assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
