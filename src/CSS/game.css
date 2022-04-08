@@ -41,18 +41,18 @@
   box-shadow: none;
 }
 
-.Respostas .verde {
+.verde {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
 }
 
-.Respostas .vermelho {
+.vermelho {
   background-color: red;
   border: 3px solid red;
   color: white;
 }
 
-.Respostas .preto {
+.preto {
   background: linear-gradient(311deg, #ffde4c 0%, #d3b951 29%, #bda128 75%, #ffcd05 100%);
   border: 2px solid black;
 }

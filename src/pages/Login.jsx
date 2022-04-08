@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchToken, saveEmail, saveName } from '../actions';
-import '../CSS/login.css';
+// import '../CSS/login.css';
 import logo from '../IMG/logo.png';
 
 class Login extends React.Component {

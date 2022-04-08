@@ -19,8 +19,23 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    const { categoryId, difficulty, type } = this.props;
+    let URL = 'https://opentdb.com/api.php?amount=5';
     const { token } = this.props;
-    const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    switch (true) {
+    case !!categoryId:
+      URL += `&category=${categoryId}&difficulty=${difficulty}&type=${type}`;
+      break;
+    case !!difficulty:
+      URL = `https://opentdb.com/api.php?amount=5&difficulty=${difficulty}&type=${type}`;
+      break;
+    case !!type:
+      URL = `https://opentdb.com/api.php?amount=5&type=${type}`;
+      break;
+    default:
+      URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+      break;
+    }
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
@@ -129,7 +144,6 @@ class Game extends React.Component {
     return (
       <div className="game">
         <Header />
-        <br />
         <div className="Timer">
           <p>{ timer }</p>
         </div>
@@ -141,46 +155,46 @@ class Game extends React.Component {
                 <h2 data-testid="question-text">{ questions[position].question }</h2>
               </div>
               <div data-testid="answer-options">
-                <div className="Respostas">
-                  { answers.map((answer, index) => (
-                    answer === questions[position].correct_answer
-                      ? (
-                        <button
-                          type="button"
-                          data-testid="correct-answer"
-                          id="correct-answer"
-                          className={ isAnswered ? 'verde' : 'preto' }
-                          onClick={ this.checkAnswer }
-                          key={ index }
-                          disabled={ isDisabled }
-                          name={ questions[position].difficulty }
-                        >
-                          { answer }
-                        </button>
-                      )
-                      : (
-                        <button
-                          type="button"
-                          data-testid={ `wrong-answer-${index}` }
-                          className={ isAnswered ? 'vermelho' : 'preto' }
-                          onClick={ this.checkAnswer }
-                          key={ index }
-                          disabled={ isDisabled }
-                        >
-                          { answer }
-                        </button>
-                      )
-                  ))}
-                </div>
-                { isAnswered && (
-                  <button
-                    onClick={ this.nextQuestion }
-                    data-testid="btn-next"
-                    type="button"
-                  >
-                    Next
-                  </button>) }
+                {/* <div className="Respostas"> */}
+                {answers.map((answer, index) => (
+                  answer === questions[position].correct_answer
+                    ? (
+                      <button
+                        type="button"
+                        data-testid="correct-answer"
+                        id="correct-answer"
+                        className={ isAnswered ? 'verde' : 'preto' }
+                        onClick={ this.checkAnswer }
+                        key={ index }
+                        disabled={ isDisabled }
+                        name={ questions[position].difficulty }
+                      >
+                        {answer}
+                      </button>
+                    )
+                    : (
+                      <button
+                        type="button"
+                        data-testid={ `wrong-answer-${index}` }
+                        className={ isAnswered ? 'vermelho' : 'preto' }
+                        onClick={ this.checkAnswer }
+                        key={ index }
+                        disabled={ isDisabled }
+                      >
+                        {answer}
+                      </button>
+                    )
+                ))}
               </div>
+              {isAnswered && (
+                <button
+                  onClick={ this.nextQuestion }
+                  data-testid="btn-next"
+                  type="button"
+                >
+                  Next
+                </button>)}
+              {/* </div> */}
             </div>
           </div>
         )}
@@ -194,10 +208,16 @@ Game.propTypes = {
   saveScoreFunction: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   updateAssertionsFunction: PropTypes.func.isRequired,
+  categoryId: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   token: state.token,
+  categoryId: state.settings.categoryId,
+  difficulty: state.settings.difficulty,
+  type: state.settings.type,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -6,6 +6,9 @@ export const SAVE_SCORE = 'SAVE_SCORE';
 export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
 export const RESET_ASSERTIONS = 'RESET_ASSERTIONS';
 export const RESET_SCORE = 'RESET_SCORE';
+export const SET_CATEGORY_ID = 'SET_CATEGORY_ID';
+export const SET_DIFFICULTY = 'SET_DIFFICULTY';
+export const SET_TYPE = 'SET_TYPE';
 
 export const requestToken = () => ({
   type: 'REQUEST_TOKEN',
@@ -47,6 +50,21 @@ export const resetAssertions = () => ({
 
 export const resetScore = () => ({
   type: RESET_SCORE,
+});
+
+export const setCategoryId = (categoryId) => ({
+  type: SET_CATEGORY_ID,
+  categoryId,
+});
+
+export const setDifficulty = (difficulty) => ({
+  type: SET_DIFFICULTY,
+  difficulty,
+});
+
+export const setType = (questionType) => ({
+  type: SET_TYPE,
+  questionType,
 });
 
 export const fetchToken = () => async (dispatch) => {
