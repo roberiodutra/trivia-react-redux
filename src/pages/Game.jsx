@@ -154,8 +154,7 @@ class Game extends React.Component {
                 <p data-testid="question-category">{ questions[position].category }</p>
                 <h2 data-testid="question-text">{ questions[position].question }</h2>
               </div>
-              <div data-testid="answer-options">
-                {/* <div className="Respostas"> */}
+              <div data-testid="answer-options" className="Respostas">
                 {answers.map((answer, index) => (
                   answer === questions[position].correct_answer
                     ? (
@@ -194,7 +193,6 @@ class Game extends React.Component {
                 >
                   Next
                 </button>)}
-              {/* </div> */}
             </div>
           </div>
         )}
