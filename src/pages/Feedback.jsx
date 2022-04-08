@@ -36,7 +36,6 @@ class Feedback extends React.Component {
     resetScoreFunction();
     resetAssertionsFunction();
     history.push('/');
-    // falta implementar a  função de resetar o estado
   }
 
   redirectToRanking = (event) => {

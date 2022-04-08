@@ -19,8 +19,20 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    const { categoryId, difficulty, type } = this.props;
+    let URL = `https://opentdb.com/api.php?amount=5&category=${categoryId}&difficulty=${difficulty}&type=${type}`;
     const { token } = this.props;
-    const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    switch (true) {
+    case categoryId:
+      return URL;
+    case difficulty:
+      return URL;
+    case type:
+      return URL;
+    default:
+      URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+      break;
+    }
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
@@ -189,10 +201,16 @@ Game.propTypes = {
   saveScoreFunction: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   updateAssertionsFunction: PropTypes.func.isRequired,
+  categoryId: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   token: state.token,
+  categoryId: state.settings.categoryId,
+  difficulty: state.settings.difficulty,
+  type: state.settings.type,
 });
 
 const mapDispatchToProps = (dispatch) => ({
