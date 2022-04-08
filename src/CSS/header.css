@@ -1,0 +1,13 @@
+header {
+  align-items: center;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  letter-spacing: 3px;
+}
+
+header img {
+  border: 2px solid;
+  border-radius: 100%;
+  color: rgb(36, 36, 36);
+}

@@ -127,46 +127,51 @@ class Game extends React.Component {
   render() {
     const { questions, position, answers, timer, isDisabled, isAnswered } = this.state;
     return (
-      <div>
+      <div className="game">
         <Header />
+        <br />
+        <div className="Timer">
+          <p>{ timer }</p>
+        </div>
         { questions.length > 0 && (
           <div>
             <div>
-              <div>
-                <h2 data-testid="question-category">{ questions[position].category }</h2>
-                <p data-testid="question-text">{ questions[position].question }</p>
+              <div className="Pergunta">
+                <p data-testid="question-category">{ questions[position].category }</p>
+                <h2 data-testid="question-text">{ questions[position].question }</h2>
               </div>
               <div data-testid="answer-options">
-                { answers.map((answer, index) => (
-                  answer === questions[position].correct_answer
-                    ? (
-                      <button
-                        type="button"
-                        data-testid="correct-answer"
-                        id="correct-answer"
-                        className={ isAnswered ? 'verde' : 'preto' }
-                        onClick={ this.checkAnswer }
-                        key={ index }
-                        disabled={ isDisabled }
-                        name={ questions[position].difficulty }
-                      >
-                        { answer }
-                      </button>
-                    )
-                    : (
-                      <button
-                        type="button"
-                        data-testid={ `wrong-answer-${index}` }
-                        className={ isAnswered ? 'vermelho' : 'preto' }
-                        onClick={ this.checkAnswer }
-                        key={ index }
-                        disabled={ isDisabled }
-                      >
-                        { answer }
-                      </button>
-                    )
-                ))}
-                <p>{ timer }</p>
+                <div className="Respostas">
+                  { answers.map((answer, index) => (
+                    answer === questions[position].correct_answer
+                      ? (
+                        <button
+                          type="button"
+                          data-testid="correct-answer"
+                          id="correct-answer"
+                          className={ isAnswered ? 'verde' : 'preto' }
+                          onClick={ this.checkAnswer }
+                          key={ index }
+                          disabled={ isDisabled }
+                          name={ questions[position].difficulty }
+                        >
+                          { answer }
+                        </button>
+                      )
+                      : (
+                        <button
+                          type="button"
+                          data-testid={ `wrong-answer-${index}` }
+                          className={ isAnswered ? 'vermelho' : 'preto' }
+                          onClick={ this.checkAnswer }
+                          key={ index }
+                          disabled={ isDisabled }
+                        >
+                          { answer }
+                        </button>
+                      )
+                  ))}
+                </div>
                 { isAnswered && (
                   <button
                     onClick={ this.nextQuestion }

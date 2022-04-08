@@ -1,0 +1,64 @@
+.loginBox {
+  align-items: center;
+  background-color: #f0f1f2;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin: 0 0 16px;
+  width: 300px;
+}
+
+.loginForm label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.loginForm input {
+  background: #00d47f;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgb(97 97 97);
+  cursor: pointer;
+  font-size: medium;
+  font-weight: 800;
+  margin: 4px;
+  padding: 4px 8px;
+}
+
+.loginForm button {
+  background-color: #ffc540;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 1px 1px 4px rgb(97 97 97);
+  color: #204c4d;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 11px auto 0;
+  padding: 8px;
+  text-transform: uppercase;
+  width: 90%;
+}
+
+.loginForm button:disabled {
+  background-color: #9b9b9b;
+  color: #494949;
+  cursor: not-allowed;
+}
+
+.loginForm button:active {
+  box-shadow: none;
+}

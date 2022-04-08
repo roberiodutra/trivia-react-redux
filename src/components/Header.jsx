@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import { saveGravatar } from '../actions';
+import '../CSS/header.css';
 
 class Header extends React.Component {
   componentDidMount() {
@@ -26,7 +27,11 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <h3 data-testid="header-player-name">{name}</h3>
-        <h3 data-testid="header-score">{score}</h3>
+        <h3 data-testid="header-score">
+          Pontos:
+          {' '}
+          {score}
+        </h3>
       </header>
     );
   }

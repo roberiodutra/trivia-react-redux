@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchToken, saveEmail, saveName } from '../actions';
+import '../CSS/login.css';
+import logo from '../IMG/logo.png';
 
 class Login extends React.Component {
   constructor() {
@@ -59,41 +61,44 @@ class Login extends React.Component {
   render() {
     const { isButtonDisabled } = this.state;
     return (
-      <form>
-        <label htmlFor="name-input">
-          Nome
-          <input
-            type="text"
-            data-testid="input-player-name"
-            id="name-input"
-            onChange={ this.validateName }
-          />
-        </label>
-        <label htmlFor="input-gravatar-email">
-          Email:
-          <input
-            type="email"
-            data-testid="input-gravatar-email"
-            id="input-gravatar-email"
-            onChange={ this.validateEmail }
-          />
-        </label>
-        <button
-          data-testid="btn-play"
-          type="submit"
-          disabled={ isButtonDisabled }
-          onClick={ this.handleSubmit }
-        >
-          Entrar
-        </button>
-        <button
-          data-testid="btn-settings"
-          type="submit"
-          onClick={ this.onClickRedirect }
-        >
-          Configurações
-        </button>
-      </form>
+      <div className="loginBox">
+        <img src={ logo } alt="" className="logo" />
+        <form className="loginForm">
+          <label htmlFor="name-input">
+            Nome
+            <input
+              type="text"
+              data-testid="input-player-name"
+              id="name-input"
+              onChange={ this.validateName }
+            />
+          </label>
+          <label htmlFor="input-gravatar-email">
+            Email:
+            <input
+              type="email"
+              data-testid="input-gravatar-email"
+              id="input-gravatar-email"
+              onChange={ this.validateEmail }
+            />
+          </label>
+          <button
+            data-testid="btn-play"
+            type="submit"
+            disabled={ isButtonDisabled }
+            onClick={ this.handleSubmit }
+          >
+            Entrar
+          </button>
+          <button
+            data-testid="btn-settings"
+            type="submit"
+            onClick={ this.onClickRedirect }
+          >
+            Configurações
+          </button>
+        </form>
+      </div>
     );
   }
 }
