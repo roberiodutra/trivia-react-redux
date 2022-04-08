@@ -4,6 +4,8 @@ export const SAVE_NAME = 'SAVE_NAME';
 export const SAVE_GRAVATAR = 'SAVE_GRAVATAR';
 export const SAVE_SCORE = 'SAVE_SCORE';
 export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
+export const RESET_ASSERTIONS = 'RESET_ASSERTIONS';
+export const RESET_SCORE = 'RESET_SCORE';
 
 export const requestToken = () => ({
   type: 'REQUEST_TOKEN',
@@ -37,6 +39,14 @@ export const saveScore = (score) => ({
 export const updateAssertions = (assertions) => ({
   type: UPDATE_ASSERTIONS,
   assertions,
+});
+
+export const resetAssertions = () => ({
+  type: RESET_ASSERTIONS,
+});
+
+export const resetScore = () => ({
+  type: RESET_SCORE,
 });
 
 export const fetchToken = () => async (dispatch) => {
