@@ -34,7 +34,6 @@ class Feedback extends React.Component {
     event.preventDefault();
     const { history } = this.props;
     history.push('/');
-    // falta implementar a  função de resetar o estado
   }
 
   redirectToRanking = (event) => {

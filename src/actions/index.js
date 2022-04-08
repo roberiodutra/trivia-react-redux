@@ -4,6 +4,9 @@ export const SAVE_NAME = 'SAVE_NAME';
 export const SAVE_GRAVATAR = 'SAVE_GRAVATAR';
 export const SAVE_SCORE = 'SAVE_SCORE';
 export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
+export const SET_CATEGORY_ID = 'SET_CATEGORY_ID';
+export const SET_DIFFICULTY = 'SET_DIFFICULTY';
+export const SET_TYPE = 'SET_TYPE';
 
 export const requestToken = () => ({
   type: 'REQUEST_TOKEN',
@@ -37,6 +40,21 @@ export const saveScore = (score) => ({
 export const updateAssertions = (assertions) => ({
   type: UPDATE_ASSERTIONS,
   assertions,
+});
+
+export const setCategoryId = (categoryId) => ({
+  type: SET_CATEGORY_ID,
+  categoryId,
+});
+
+export const setDifficulty = (difficulty) => ({
+  type: SET_DIFFICULTY,
+  difficulty,
+});
+
+export const setType = (questionType) => ({
+  type: SET_TYPE,
+  questionType,
 });
 
 export const fetchToken = () => async (dispatch) => {
