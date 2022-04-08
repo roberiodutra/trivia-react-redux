@@ -21,7 +21,6 @@ class Game extends React.Component {
   componentDidMount() {
     const { token } = this.props;
     const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
-
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
@@ -34,8 +33,7 @@ class Game extends React.Component {
   }
 
   componentWillUnmount() {
-    const { interval } = this.state;
-    clearInterval(interval);
+    this.clearIntervalFunction();
   }
 
   start = () => {
@@ -46,12 +44,17 @@ class Game extends React.Component {
 
   lessTimer = () => {
     this.setState((prevState) => ({ timer: prevState.timer - 1 }), () => {
-      const { timer, interval } = this.state;
+      const { timer } = this.state;
       if (timer === 0) {
-        clearInterval(interval);
-        this.setState({ isDisabled: true });
+        this.clearIntervalFunction();
       }
     });
+  }
+
+  clearIntervalFunction = () => {
+    const { interval } = this.state;
+    clearInterval(interval);
+    this.setState({ isDisabled: true, isAnswered: true });
   }
 
   randomizeAnswers = () => {
@@ -87,20 +90,19 @@ class Game extends React.Component {
       case 'medium':
         totalScore += (defaultScore + (timer * 2));
         saveScoreFunction(totalScore);
-        updateAssertionsFunction(assertions);
         break;
       case 'hard':
         totalScore += (defaultScore + (timer * Number('3')));
         saveScoreFunction(totalScore);
-        updateAssertionsFunction(assertions);
         break;
       default:
         totalScore += (defaultScore + timer);
         saveScoreFunction(totalScore);
-        updateAssertionsFunction(assertions);
         break;
       }
+      updateAssertionsFunction(assertions);
     }
+    this.clearIntervalFunction();
   }
 
   // 10 + (timer * dificuldade)
@@ -109,6 +111,7 @@ class Game extends React.Component {
   nextQuestion = () => {
     const { questions, position } = this.state;
     const { history } = this.props;
+    this.start();
     const nextPosition = position + 1;
     if (position === questions.length - 1) {
       history.push('/feedback');
@@ -117,7 +120,8 @@ class Game extends React.Component {
       position: nextPosition,
       isAnswered: false,
       answers: [],
-      timer: 30 }, () => this.randomizeAnswers());
+      timer: 30,
+      isDisabled: false }, this.randomizeAnswers);
   };
 
   render() {

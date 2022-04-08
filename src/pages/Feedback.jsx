@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { saveScore } from '../actions';
+import { resetAssertions, resetScore } from '../actions';
 
 class Feedback extends React.Component {
   componentDidMount() {
@@ -32,17 +32,18 @@ class Feedback extends React.Component {
 
   redirectToHome = (event) => {
     event.preventDefault();
-    const { history } = this.props;
+    const { resetScoreFunction, resetAssertionsFunction, history } = this.props;
+    resetScoreFunction();
+    resetAssertionsFunction();
     history.push('/');
     // falta implementar a  função de resetar o estado
   }
 
   redirectToRanking = (event) => {
-    const { saveScoreFunction } = this.props;
-    const defaultScore = 0;
+    const { resetScoreFunction, resetAssertionsFunction, history } = this.props;
+    resetScoreFunction();
+    resetAssertionsFunction();
     event.preventDefault();
-    const { history } = this.props;
-    saveScoreFunction(defaultScore);
     history.push('/ranking');
   }
 
@@ -96,7 +97,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveScoreFunction: (score) => dispatch(saveScore(score)),
+  resetScoreFunction: () => dispatch(resetScore()),
+  resetAssertionsFunction: () => dispatch(resetAssertions()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
