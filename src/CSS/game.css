@@ -1,11 +1,74 @@
-.verde {
+.game {
+  align-items: stretch;
+  background: rgb(0, 212, 255)
+    radial-gradient(circle, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 84%, black 100%);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.Pergunta {
+  background: linear-gradient(135deg, #2d4026 0%, #305029 29%, #387a2f 75%, #1a570f 100%);
+  border: 2px solid black;
+  border-radius: 10px;
+  color: lightgray;
+  margin: 12px auto 0;
+  padding: 20px;
+  width: 90%;
+}
+
+.Respostas button {
+  border-radius: 12px;
+  box-shadow: 1px 1px 4px rgb(97 97 97);
+  color: #204c4d;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 12px auto 0;
+  padding: 8px;
+  text-transform: uppercase;
+  width: 90%;
+}
+
+.Respostas button:disabled {
+  cursor: not-allowed;
+}
+
+.Respostas button:active {
+  box-shadow: none;
+}
+
+.Respostas .verde {
+  background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
 }
 
-.vermelho {
+.Respostas .vermelho {
+  background-color: red;
   border: 3px solid red;
+  color: white;
 }
 
-.preto {
+.Respostas .preto {
+  background: linear-gradient(311deg, #ffde4c 0%, #d3b951 29%, #bda128 75%, #ffcd05 100%);
   border: 2px solid black;
+}
+
+.Timer {
+  display: flex;
+  justify-content: center;
+}
+
+.Timer p {
+  background: #ff3c3c;
+  border: 2px solid black;
+  border-radius: 100%;
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  padding: 12px;
 }
